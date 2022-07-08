@@ -1,10 +1,8 @@
-import org.w3c.dom.ls.LSOutput;
-
 import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Добро пожаловать");
+        System.out.println("Добро пожаловать в Калькулятор");
         getInput();
     }
     static void processInput(String input) {
@@ -16,7 +14,7 @@ public class Main {
         String operation = null;
         boolean isFirstNumNumeric = false, isSecondNumNumeric = false;
         if(arr.length > 3){
-            throw new IllegalArgumentException("Количество аргументов должго равно 2");
+            throw new IllegalArgumentException("Количество аргументов должно равно 2");
         }
         if (isNumeric(arr[0])) {
             int1 = Integer.parseInt(arr[0]);
@@ -46,9 +44,9 @@ public class Main {
                     result = int1 / int2;
                 } catch (ArithmeticException | InputMismatchException e) {
                     System.out.println("Exception" + e);
-                      throw new ArithmeticException("Деление на ноль не осуществляется");
+                    throw new ArithmeticException("Деление на ноль не осуществляется");
                 }
-                    break;
+                break;
             default:
                 throw new IllegalArgumentException("Неверный знак операции");
         }
@@ -59,28 +57,27 @@ public class Main {
                 System.out.println("Произошла ошибка");
                 Integer.parseInt("Нет такой операции");
                 return;
-                }
+            }
         } catch (NumberFormatException e) {
             throw new NumberFormatException("Ошибка,используются разные системы счисления");
         }
 
-        while (int1 >= 11 || int2 >= 11) {
+        while (int1 > 10 || int2 > 10) {
             System.out.println("Число больше 10. Повторите еще раз");
             getInput();
-            break;
+            return;
+
         }
-         if (result < 0){
-             throw new IllegalArgumentException("Римское число не может быть отрицательным");
-         }
-            System.out.println("======================RESULT======================");
-            if (!isFirstNumNumeric && !isSecondNumNumeric) {
-                romanianResult = RomanNumerals(result);
-                System.out.println(romanianResult);
-            } else if (int1 >= 11) {
-            } else if (int2 >= 11) {
-            } else {
-                System.out.println(result);
-            };
+        if (result < 0){
+            throw new IllegalArgumentException("Римское число не может быть отрицательным");
+        }
+        System.out.println("======================RESULT======================");
+        if (!isFirstNumNumeric && !isSecondNumNumeric) {
+            romanianResult = RomanNumerals(result);
+            System.out.println(romanianResult);
+        } else {
+            System.out.println(result);
+        };
     }
 
     static String RomanNumerals(int Int) {
@@ -118,33 +115,31 @@ public class Main {
 
     static void getInput() {
         try {
-        System.out.println("Введите операцию: ");
-        Scanner scanner = new Scanner(System.in);
-        if (scanner.hasNextLine()) {
-            String s = scanner.nextLine();
-            processInput(s);
-        }
+            System.out.println("Введите операцию: ");
+            Scanner scanner = new Scanner(System.in);
+            if (scanner.hasNextLine()) {
+                String s = scanner.nextLine();
+                processInput(s);
+            }
         }catch (Exception e){
             System.out.println(e);
         }
     }
     static int convert(String a) {
-        try {
-            if (a.equals("I")) return 1;
-            if (a.equals("II")) return 2;
-            if (a.equals("III")) return 3;
-            if (a.equals("IV")) return 4;
-            if (a.equals("V")) return 5;
-            if (a.equals("VI")) return 6;
-            if (a.equals("VII")) return 7;
-            if (a.equals("VIII")) return 8;
-            if (a.equals("IX")) return 9;
-            if (a.equals("X")) return 10;
-        } catch (NumberFormatException e) {
-
-                throw new NumberFormatException("Т.к в римской системе нет отрицптельных чисел");
-            }
-        return -1;
+        if (a.equals("I")) return 1;
+        if (a.equals("II")) return 2;
+        if (a.equals("III")) return 3;
+        if (a.equals("IV")) return 4;
+        if (a.equals("V")) return 5;
+        if (a.equals("VI")) return 6;
+        if (a.equals("VII")) return 7;
+        if (a.equals("VIII")) return 8;
+        if (a.equals("IX")) return 9;
+        if (a.equals("X")) {
+            return 10;
+        } else {
+            throw new NumberFormatException("Вы ввели отрицательное или больше 10 римское число");
+        }
     }
     private static boolean isNumeric(String s) {
         if (s == null) {
@@ -156,5 +151,5 @@ public class Main {
         } catch (Exception ex) {
             return false;
         }
-      }
     }
+}
